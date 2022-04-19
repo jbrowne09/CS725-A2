@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="Multicast_Client" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+      </Event>
+      <Event Name="IN" >
+        <With Var="PE_ENTRY" />
+        <With Var="PE_EXIT" />
+      </Event>
+      <Event Name="REQI" >
+        <With Var="PE_ENTRY" />
+        <With Var="PE_EXIT" />
+        <With Var="TIME_I" />
+      </Event>
+      <Event Name="RESPI" >
+        <With Var="PE_ENTRY" />
+        <With Var="PE_EXIT" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+      </Event>
+      <Event Name="OUT" >
+        <With Var="RUN" />
+      </Event>
+      <Event Name="REQO" >
+        <With Var="RUN" />
+      </Event>
+      <Event Name="RESPO" >
+        <With Var="RUN" />
+        <With Var="TIME_O" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="PE_ENTRY" Type="BOOL" />
+      <VarDeclaration Name="PE_EXIT" Type="BOOL" />
+      <VarDeclaration Name="TIME_I" Type="REAL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="RUN" Type="BOOL" />
+      <VarDeclaration Name="TIME_O" Type="REAL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="1527.7777" y="611.1111" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="1527.7777" y="177.77777" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="STOP_S" x="2100.0" y="1022.22217" >
+        <ECAction Algorithm="STOP_A" Output="OUT" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1527.7777" y="400.0" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="1327.7777" y="394.44443" />
+      <ECTransition Source="START" Destination="STOP_S" Condition="IN&#38;PE_ENTRY" x="1811.1111" y="794.4444" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+    <Other Language="Java" Text="RUN.value = true;&#10;TIME_O.value = 0;&#10;TIME_I.value = 0;&#10;PE_ENTRY.value = false;&#10;PE_EXIT.value = false;&#10;" />
+  </Algorithm>
+  <Algorithm Name="RUN_A" >
+    <Other Language="Java" Text="RUN.value = true;&#10;&#10;System.out.println(&#34;RUNNING A&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="STOP_A" >
+    <Other Language="Java" Text="RUN.value = false;&#10;&#10;System.out.println(&#34;STOPPING A&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="CH_TIME_A" >
+    <Other Language="Java" Text="if (TIME_I.value &#60; TIME_O.value) {&#10;RESPO.serviceEvent(this);&#10;}&#10;" />
+  </Algorithm>
+  <Algorithm Name="UPD_TIME_A" >
+    <Other Language="Java" Text="if (TIME_O.value &#60; TIME_I.value) {&#10;TIME_O.value = TIME_I.value + 1;&#10;} else {&#10;TIME_O.value += 1;&#10;}&#10;" />
+  </Algorithm>
+  </BasicFB>
+</FBType>

@@ -1,0 +1,89 @@
+/* Copyright (c)2020 Rockwell Automation. All rights reserved. */
+package fb.rt.cs725;
+import fb.datatype.*;
+import fb.rt.*;
+import fb.rt.events.*;
+/** FUNCTION_BLOCK Run_Conv
+  * @author JHC
+  * @version 20201024/JHC
+  */
+public class Run_Conv extends FBInstance
+{
+/** Initialization Request */
+ public EventServer INIT = new EventInput(this);
+/** Normal Execution Request */
+ public EventServer REQ = new EventInput(this);
+/** EVENT CAS_STOP */
+ public EventServer CAS_STOP = new EventInput(this);
+/** EVENT CAS_START */
+ public EventServer CAS_START = new EventInput(this);
+/** Initialization Confirm */
+ public EventOutput INITO = new EventOutput();
+/** Execution Confirmation */
+ public EventOutput CNF = new EventOutput();
+/** EVENT STOP */
+ public EventOutput STOP = new EventOutput();
+/** EVENT START */
+ public EventOutput START = new EventOutput();
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+*/
+  public EventServer eiNamed(String s){
+    if("INIT".equals(s)) return INIT;
+    if("REQ".equals(s)) return REQ;
+    if("CAS_STOP".equals(s)) return CAS_STOP;
+    if("CAS_START".equals(s)) return CAS_START;
+    return super.eiNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+*/
+  public EventOutput eoNamed(String s){
+    if("INITO".equals(s)) return INITO;
+    if("CNF".equals(s)) return CNF;
+    if("STOP".equals(s)) return STOP;
+    if("START".equals(s)) return START;
+    return super.eoNamed(s);}
+private static final int index_START = 0;
+private void state_START(){
+  eccState = index_START;
+}
+private static final int index_INIT = 1;
+private void state_INIT(){
+  eccState = index_INIT;
+  alg_INIT();
+  INITO.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_START();
+}
+/** The default constructor. */
+public Run_Conv(){
+    super();
+  }
+/** {@inheritDoc}
+* @param e {@inheritDoc} */
+  public void serviceEvent(EventServer e){
+    if (e == INIT) service_INIT();
+    else if (e == REQ) service_REQ();
+    else if (e == CAS_STOP) service_CAS_STOP();
+    else if (e == CAS_START) service_CAS_START();
+  }
+/** Services the INIT event. */
+  public void service_INIT(){
+    if ((eccState == index_START)) state_INIT();
+  }
+/** Services the REQ event. */
+  public void service_REQ(){
+  }
+/** Services the CAS_STOP event. */
+  public void service_CAS_STOP(){
+  }
+/** Services the CAS_START event. */
+  public void service_CAS_START(){
+  }
+  /** ALGORITHM INIT IN Java*/
+public void alg_INIT(){
+
+}
+}

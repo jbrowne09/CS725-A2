@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="RingTokenLogicConveyor7" Comment="Event-only Local Group Subscriber" >
+  <Identification Standard="61499-1" Classification="Communications" Description="Local Event Group Subscriber" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-05-02" Remarks="Optimized." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2001-10-02" Remarks="Copied/modified from SUBSCRIBE" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+    <Compiler Language="Java" Vendor="IBM" Product="VisualAge" Version="3.0" />
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Service Initialization" >
+        <With Var="ID" />
+      </Event>
+      <Event Name="Token" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+      </Event>
+      <Event Name="IND" Comment="Service Indication" >
+      </Event>
+      <Event Name="TokenO" >
+      </Event>
+      <Event Name="StopConveyor4" >
+      </Event>
+      <Event Name="StartConveyor4" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="ID" Type="WSTRING" Comment="Local Group Name-Default is FB Instance Name" />
+      <VarDeclaration Name="PE7" Type="BOOL" />
+      <VarDeclaration Name="PE4" Type="BOOL" />
+      <VarDeclaration Name="PE13" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="Start" Comment="Has the token passed to it" x="922.22217" y="138.88889" >
+      </ECState>
+      <ECState Name="HasToken" x="1488.8888" y="427.77777" >
+      </ECState>
+      <ECState Name="CheckIfCriticalSectionNeeded" x="2294.4443" y="672.22217" >
+      </ECState>
+      <ECState Name="StopOtherConveyors" x="2094.4443" y="1211.1111" >
+        <ECAction Output="StopConveyor4" />
+      </ECState>
+      <ECState Name="StartNeededConveyors" x="2127.7776" y="2077.7776" >
+        <ECAction Output="StartConveyor4" />
+      </ECState>
+      <ECState Name="WaitForBagExit" x="2166.6665" y="1633.3333" >
+      </ECState>
+      <ECState Name="PassToken" x="1488.8888" y="2588.8887" >
+        <ECAction Output="TokenO" />
+      </ECState>
+      <ECState Name="Waiting" x="666.6666" y="2055.5554" >
+      </ECState>
+      <ECTransition Source="Start" Destination="HasToken" Condition="INIT" x="1205.5555" y="283.3333" />
+      <ECTransition Source="HasToken" Destination="CheckIfCriticalSectionNeeded" Condition="1" x="2294.4443" y="488.88885" />
+      <ECTransition Source="CheckIfCriticalSectionNeeded" Destination="StopOtherConveyors" Condition="PE7" x="2683.3333" y="944.4444" />
+      <ECTransition Source="StopOtherConveyors" Destination="WaitForBagExit" Condition="1" x="2166.6665" y="1405.5555" />
+      <ECTransition Source="WaitForBagExit" Destination="StartNeededConveyors" Condition="PE13" x="2127.7776" y="1849.9999" />
+      <ECTransition Source="StartNeededConveyors" Destination="PassToken" Condition="1" x="1705.5555" y="2411.111" />
+      <ECTransition Source="CheckIfCriticalSectionNeeded" Destination="PassToken" Condition="!PE7" x="1761.1111" y="1933.3333" />
+      <ECTransition Source="Waiting" Destination="HasToken" Condition="Token" x="1205.5555" y="977.7777" />
+      <ECTransition Source="PassToken" Destination="Waiting" Condition="1" x="944.4444" y="2233.3333" />
+    </ECC>
+  <Algorithm Name="NeedsCriticalSectionOrNot" >
+    <Other Language="Java" Text="" />
+  </Algorithm>
+  </BasicFB>
+</FBType>

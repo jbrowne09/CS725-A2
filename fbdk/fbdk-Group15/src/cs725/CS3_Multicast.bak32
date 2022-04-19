@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="CS3_Multicast" Comment="Composite Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWCOMPFB." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-08" Remarks="Added DLY FB as example." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="PE8" />
+        <With Var="PE11" />
+        <With Var="PE_EXIT" />
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="RUN_8" />
+        <With Var="RUN_11" />
+        <With Var="RUN_9" />
+        <With Var="RUN_10" />
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="PE8" Type="BOOL" />
+      <VarDeclaration Name="PE11" Type="BOOL" />
+      <VarDeclaration Name="PE_EXIT" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="RUN_8" Type="BOOL" />
+      <VarDeclaration Name="RUN_11" Type="BOOL" />
+      <VarDeclaration Name="RUN_9" Type="BOOL" />
+      <VarDeclaration Name="RUN_10" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork >
+    <FB Name="CONV_8" Type="Multicast_Client" x="1177.7777" y="449.99997" />
+    <FB Name="CONV_11" Type="Multicast_Client" x="2666.6665" y="449.99997" />
+    <FB Name="CONV_9" Type="Run_Conv" x="3999.9998" y="438.8889" />
+    <FB Name="CONV_10" Type="Cas_Stop" x="3927.7776" y="1233.3333" />
+    <FB Name="PRINT" Type="CSPrint" x="3533.3333" y="2227.7776" />
+    <EventConnections>
+      <Connection Source="CONV_8.RESPO" Destination="CONV_11.RESPI" dx1="494.44443" />
+      <Connection Source="CONV_8.REQO" Destination="CONV_11.REQI" dx1="566.6666" />
+      <Connection Source="INIT" Destination="CONV_8.INIT" dx1="1072.2222" />
+      <Connection Source="INIT" Destination="CONV_11.INIT" dx1="2561.111" />
+      <Connection Source="CONV_11.REQO" Destination="CONV_8.REQI" dx1="316.66666" dx2="316.66666" dy="-555.55554" />
+      <Connection Source="CONV_11.RESPO" Destination="CONV_8.RESPI" dx1="350.0" dx2="361.11108" dy="-716.6666" />
+      <Connection Source="REQ" Destination="CONV_8.IN" dx1="1066.6666" />
+      <Connection Source="CONV_8.OUT" Destination="CNF" dx1="1794.4443" />
+      <Connection Source="CONV_11.OUT" Destination="CNF" dx1="3283.3333" />
+      <Connection Source="REQ" Destination="CONV_11.IN" dx1="2555.5554" />
+      <Connection Source="INIT" Destination="CONV_9.INIT" dx1="3894.4443" />
+      <Connection Source="CONV_9.INITO" Destination="CNF" dx1="4416.6665" />
+      <Connection Source="INIT" Destination="CONV_10.INIT" dx1="3822.2222" />
+      <Connection Source="CONV_10.OUT" Destination="CNF" dx1="4500.0" />
+      <Connection Source="CONV_11.OUT" Destination="CONV_10.IN" dx1="466.66666" />
+      <Connection Source="CONV_11.OUT_Print" Destination="PRINT.IN" dx1="288.8889" />
+      <Connection Source="CONV_8.OUT_Print" Destination="PRINT.IN" dx1="600.0" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="PE8" Destination="CONV_8.PE_ENTRY" dx1="1072.2222" />
+      <Connection Source="PE_EXIT" Destination="CONV_8.PE_EXIT" dx1="1005.55554" />
+      <Connection Source="PE11" Destination="CONV_11.PE_ENTRY" dx1="2544.4443" />
+      <Connection Source="PE_EXIT" Destination="CONV_11.PE_EXIT" dx1="2494.4443" />
+      <Connection Source="CONV_11.RUN" Destination="RUN_11" dx1="3333.3333" />
+      <Connection Source="CONV_11.TIME_O" Destination="CONV_8.TIME_I" dx1="105.55555" dx2="105.55555" dy="438.8889" />
+      <Connection Source="CONV_8.TIME_O" Destination="CONV_11.TIME_I" dx1="483.3333" />
+      <Connection Source="CONV_8.RUN" Destination="RUN_8" dx1="1827.7777" />
+      <Connection Source="CONV_9.RUN" Destination="RUN_9" dx1="4450.0" />
+      <Connection Source="RUN_11" Destination="CONV_10.PREV_RUN" dx1="3766.6665" />
+      <Connection Source="CONV_10.RUN" Destination="RUN_10" dx1="4550.0" />
+      <Connection Source="CONV_11.CS_Status" Destination="PRINT.STATUS_11" dx1="238.88889" />
+      <Connection Source="CONV_8.CS_Status" Destination="PRINT.STATUS_8" dx1="338.8889" />
+      <Connection Source="CONV_8.TIME_O" Destination="PRINT.TIME_8" dx1="422.2222" />
+      <Connection Source="CONV_11.TIME_O" Destination="PRINT.TIME_11" dx1="144.44444" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

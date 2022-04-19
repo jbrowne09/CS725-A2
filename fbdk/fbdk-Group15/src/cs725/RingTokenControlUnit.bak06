@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="RingTokenControlUnit" Comment="Composite Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWCOMPFB." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-08" Remarks="Added DLY FB as example." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+      </Event>
+      <Event Name="StartConveyor4" >
+      </Event>
+      <Event Name="StopConveyor4" >
+      </Event>
+      <Event Name="StartConveyor7" >
+      </Event>
+      <Event Name="StopConveyor7" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="PE7" Type="BOOL" />
+      <VarDeclaration Name="PE4" Type="BOOL" />
+      <VarDeclaration Name="PE13" Type="BOOL" />
+    </InputVars>
+  </InterfaceList>
+  <FBNetwork >
+    <FB Name="conveyor7RingUnit" Type="RingTokenLogicConveyor7" x="800.0" y="899.99994" />
+    <FB Name="conveyor4ringUnit" Type="RingTokenLogicConveyor4" x="3011.111" y="938.88885" />
+    <EventConnections>
+      <Connection Source="INIT" Destination="conveyor7RingUnit.INIT" dx1="700.0" />
+      <Connection Source="INIT" Destination="conveyor4ringUnit.INIT" dx1="2911.111" />
+      <Connection Source="conveyor7RingUnit.TokenO" Destination="conveyor4ringUnit.Token" dx1="249.99998" />
+      <Connection Source="conveyor7RingUnit.StopConveyor4" Destination="StopConveyor4" dx1="1744.4443" />
+      <Connection Source="conveyor7RingUnit.StartConveyor4" Destination="StartConveyor4" dx1="1744.4443" />
+      <Connection Source="conveyor4ringUnit.StopConveyor7" Destination="StopConveyor7" dx1="3955.5554" />
+      <Connection Source="conveyor4ringUnit.StartConveyor7" Destination="StartConveyor7" dx1="3955.5554" />
+    </EventConnections>
+  </FBNetwork>
+</FBType>

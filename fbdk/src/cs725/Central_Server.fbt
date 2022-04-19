@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="Central_Server" Comment="Blake Central Server" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="REQUEST_1" >
+      </Event>
+      <Event Name="REQUEST_2" >
+      </Event>
+      <Event Name="RELEASE_1" >
+      </Event>
+      <Event Name="RELEASE_2" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="GRANT_1" >
+      </Event>
+      <Event Name="GRANT_2" >
+      </Event>
+    </EventOutputs>
+  </InterfaceList>
+  <BasicFB>
+    <ECC >
+      <ECState Name="IDLE" Comment="INIT" x="1894.4443" y="800.0" >
+      </ECState>
+      <ECState Name="REQ2" x="2527.7776" y="788.88885" >
+        <ECAction Output="GRANT_2" />
+        <ECAction Algorithm="SixCrit" />
+      </ECState>
+      <ECState Name="REQ1" x="866.6666" y="816.6666" >
+        <ECAction Output="GRANT_1" />
+        <ECAction Algorithm="TwoCrit" />
+      </ECState>
+      <ECState Name="CRIT2" x="1872.2222" y="283.3333" >
+        <ECAction Algorithm="TwoQue" />
+      </ECState>
+      <ECState Name="CRIT1" x="1911.1111" y="1400.0" >
+        <ECAction Algorithm="SixQue" />
+      </ECState>
+      <ECTransition Source="IDLE" Destination="REQ2" Condition="REQUEST_2" x="2222.2222" y="1044.4445" />
+      <ECTransition Source="REQ2" Destination="IDLE" Condition="RELEASE_2" x="2200.0" y="611.1111" />
+      <ECTransition Source="IDLE" Destination="REQ1" Condition="REQUEST_1" x="1194.4445" y="1044.4445" />
+      <ECTransition Source="REQ1" Destination="IDLE" Condition="RELEASE_1" x="1183.3333" y="588.88885" />
+      <ECTransition Source="REQ2" Destination="CRIT2" Condition="REQUEST_1" x="2711.111" y="283.3333" />
+      <ECTransition Source="CRIT2" Destination="REQ1" Condition="RELEASE_2" x="866.6666" y="283.3333" />
+      <ECTransition Source="REQ1" Destination="CRIT1" Condition="REQUEST_2" x="866.6666" y="1400.0" />
+      <ECTransition Source="CRIT1" Destination="REQ2" Condition="RELEASE_1" x="2655.5554" y="1400.0" />
+    </ECC>
+  <Algorithm Name="TwoQue" Comment="Initialization algorithm" >
+    <Other Language="Java" Text="System.out.println(&#34;CENTRAL_SERVER: Converyor TWO in queue&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="TwoCrit" Comment="Initialization algorithm" >
+    <Other Language="Java" Text="System.out.println(&#34;CENTRAL_SERVER: Converyor Two accessing the critical section&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="SixQue" Comment="Initialization algorithm" >
+    <Other Language="Java" Text="System.out.println(&#34;CENTRAL_SERVER: Converyor Six in queue&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="SixCrit" Comment="Initialization algorithm" >
+    <Other Language="Java" Text="System.out.println(&#34;CENTRAL_SERVER: Converyor Six accessing the critical section&#34;);&#10;" />
+  </Algorithm>
+  </BasicFB>
+</FBType>
