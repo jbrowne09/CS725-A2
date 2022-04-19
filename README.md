@@ -1,9 +1,9 @@
 # COMPSYS 725 Assignment 2 #
-# Group 15
-# Project Authors: Jonathan Browne, Blake Williams, Alex Monk
+## Group 15
+## Project Authors: Jonathan Browne, Blake Williams, Alex Monk
 
-# Ring token implementation was not fully functioning at completion of the project and is known to deadlock
-# Inputting Bags too fast is known to cause a visual 'glitch' where extra bags are rendered completely still on the conveyor
+Ring token implementation was not fully functioning at completion of the project and is known to deadlock
+Inputting Bags too fast is known to cause a visual 'glitch' where extra bags are rendered completely still on the conveyor
 
 ## How to run
 
