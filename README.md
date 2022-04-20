@@ -2,9 +2,9 @@
 Project Authors: Jonathan Browne, Blake Williams, Alex Monk
 
 ## Group 15
-*Ring token implementation was not fully functioning at completion of the project and is known to deadlock
-*Inputting Bags too fast is known to cause a visual 'glitch' where extra bags are rendered completely still on the conveyor
-*Project files includes fbdk software available online at https://www.holobloc.com/fbdk11/index.htm
+* Ring token implementation was not fully functioning at completion of the project and is known to deadlock
+* Inputting Bags too fast is known to cause a visual 'glitch' where extra bags are rendered completely still on the conveyor
+* Project files includes fbdk software available online at https://www.holobloc.com/fbdk11/index.htm
 
 ## How to run
 
